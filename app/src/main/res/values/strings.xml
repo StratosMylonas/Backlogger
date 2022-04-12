@@ -5,4 +5,15 @@
     <string name="custom_view_image">Custom View Image</string>
     <string name="custom_view_medium_text">Medium Text</string>
     <string name="custom_view_txtView">TextView</string>
+
+    <!--    Main Activity    -->
+    <string name="main_activity_add_button">Add Button</string>
+    <string name="main_activity_no_entries">Add a game\nto your backlog</string>
+
+    <!--    Add Game    -->
+    <string name="add_game_title">Title: </string>
+    <string name="add_game_genre">Genre: </string>
+    <string name="add_game_release_year">Year of Release: </string>
+    <string name="add_game_duration_hours">Duration (Hours): </string>
+
 </resources>

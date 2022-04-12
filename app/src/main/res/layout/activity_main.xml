@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/add_button"
+        android:contentDescription="@string/main_activity_add_button"
+        android:layout_margin="30dp" />
 
     <ListView
         android:id="@+id/list"
@@ -12,4 +21,13 @@
         android:layout_marginBottom="50dp">
     </ListView>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_activity_no_entries"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="30sp"/>
+
+
+</FrameLayout>
