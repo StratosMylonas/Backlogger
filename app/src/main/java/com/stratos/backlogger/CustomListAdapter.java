@@ -9,14 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] mainTitle;
-    private final String[] subtitle;
-    private final Integer[] imgId;
+    private final ArrayList<String> mainTitle;
+    private final ArrayList<String> subtitle;
+    private final ArrayList<Integer> imgId;
 
-    public CustomListAdapter(Activity context, String[] mainTitle, String[] subtitle, Integer[] imgId) {
+    public CustomListAdapter(Activity context, ArrayList<String> mainTitle, ArrayList<String> subtitle, ArrayList<Integer> imgId) {
         super(context, R.layout.custom_view, mainTitle);
 
         this.context = context;
@@ -33,9 +35,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
 
-        titleText.setText(mainTitle[position]);
-        imageView.setImageResource(imgId[position]);
-        subtitleText.setText(subtitle[position]);
+        titleText.setText(mainTitle.get(position));
+        imageView.setImageResource(imgId.get(position));
+        subtitleText.setText(subtitle.get(position));
 
         return rowView;
     }

@@ -15,5 +15,7 @@
     <string name="add_game_genre">Genre: </string>
     <string name="add_game_release_year">Year of Release: </string>
     <string name="add_game_duration_hours">Duration (Hours): </string>
+    <string name="add_game_btn_ok">OK</string>
+    <string name="add_game_btn_cancel">Cancel</string>
 
 </resources>
