@@ -1,19 +1,14 @@
 package com.stratos.backlogger;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.database.Cursor;
-import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -37,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new DatabaseManager(this);
-        ArrayList<String> mainTitle = get_col(2);
-        ArrayList<String> subTitle = get_col(3);
-        ArrayList<Integer> imgId = null;
+        ArrayList<VideoGame> videoGames = get_videoGames();
 
         FloatingActionButton addBtn = findViewById(R.id.addBtn);
         addBtn.setOnClickListener((View.OnClickListener) view -> {
@@ -50,28 +43,41 @@ public class MainActivity extends AppCompatActivity {
 
             TextInputEditText name = addGame.findViewById(R.id.add_game_title);
             TextInputEditText genre = addGame.findViewById(R.id.add_game_genre);
+            TextInputEditText platform = addGame.findViewById(R.id.add_game_platform);
             TextInputEditText yearOfRelease = addGame.findViewById(R.id.add_game_release_year);
             TextInputEditText durationHours = addGame.findViewById(R.id.add_game_duration_hours);
             Button btnOk = addGame.findViewById(R.id.add_game_btn_ok);
             Button btnCancel = addGame.findViewById(R.id.add_game_btn_cancel);
 
             btnOk.setOnClickListener(view12 -> {
-                String nameStr, genreStr, yearOfReleaseStr, durationHoursStr;
+                VideoGame videoGame;
+                String nameStr, genreStr, platformStr, yearOfReleaseStr, durationHoursStr;
                 int yearOfReleaseInt, durationHoursInt;
 
                 nameStr = Objects.requireNonNull(name.getText()).toString();
                 genreStr = Objects.requireNonNull(genre.getText()).toString();
+                platformStr = Objects.requireNonNull(platform.getText()).toString();
                 yearOfReleaseStr = Objects.requireNonNull(yearOfRelease.getText()).toString();
                 durationHoursStr = Objects.requireNonNull(durationHours.getText()).toString();
+
+                yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
+                durationHoursInt = Integer.parseInt(durationHoursStr);
+
+                videoGame = new VideoGame(nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
 
                 if (nameStr.matches("") || genreStr.matches("") || yearOfReleaseStr.matches("") || durationHoursStr.matches("")) {
                     Toast toast = Toast.makeText(MainActivity.this, "Please fulfill all fields", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
-                    durationHoursInt = Integer.parseInt(durationHoursStr);
-
-                    db.insertVideoGames(nameStr, genreStr, yearOfReleaseInt, durationHoursInt);
+                    boolean ret = db.insertVideoGames(videoGame);
+                    if (ret){
+                        Toast toast = Toast.makeText(MainActivity.this, "Added new game", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else{
+                        Toast toast = Toast.makeText(MainActivity.this, "Error adding game. Please try again", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
 
                     finish();
                     startActivity(getIntent());
@@ -82,42 +88,43 @@ public class MainActivity extends AppCompatActivity {
             btnCancel.setOnClickListener(view1 -> addGame.dismiss());
         });
 
-        if (mainTitle != null) {
+        if (videoGames.size() != 0) {
+            ArrayList<String> mainTitle = null, subTitle = null;
+            ArrayList<Integer> imgId = null;
+            for (int i=0; i<videoGames.size(); i++){
+                mainTitle.add("str");
+                subTitle.add("myl");
+                imgId.add(R.drawable.generic_video_game);
+            }
             CustomListAdapter adapter = new CustomListAdapter(this, mainTitle, subTitle, imgId);
             listView = findViewById(R.id.list);
             listView.setAdapter(adapter);
         }
     }
 
-    protected ArrayList<String> get_col(int col) {
-        //   arrayList = new ArrayList<String>();
-        ArrayList<String> data = null;
+    protected ArrayList<VideoGame> get_videoGames() {
+        // on below line we are creating a
+        // database for reading our database.
 
-        Cursor res = db.getAllVideoGames();
-        TextView emptyPromptTxt = findViewById(R.id.emptyPromptTxt);
-        if (res.getCount() == 0) {
-            // show message
-            emptyPromptTxt.setVisibility(View.VISIBLE);
-            return null;
-        } else {
-            emptyPromptTxt.setVisibility(View.INVISIBLE);
-        }
+        // on below line we are creating a new array list.
+        ArrayList<VideoGame> videoGames = new ArrayList<>();
+        Cursor cursor = db.getAllVideoGames();
 
-        while (res.moveToNext()) {
-            data.add(res.getString(col));
-        }
-
-        if (res.moveToFirst()) {
+        // moving our cursor to first position.
+        if (cursor.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
-                data.add(new CourseModal(cursorCourses.getString(1),
-                        cursorCourses.getString(4),
-                        cursorCourses.getString(2),
-                        cursorCourses.getString(3)));
-            } while (cursorCourses.moveToNext());
+                videoGames.add(new VideoGame(cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        Integer.parseInt(cursor.getString(4)),
+                        Integer.parseInt(cursor.getString(5))));
+            } while (cursor.moveToNext());
             // moving our cursor to next.
         }
-
-        return data;
+        // at last closing our cursor
+        // and returning our array list.
+        cursor.close();
+        return videoGames;
     }
 }

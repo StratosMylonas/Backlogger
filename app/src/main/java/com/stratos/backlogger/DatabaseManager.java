@@ -15,12 +15,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public static final String TABLE_MOVIES = "movies";
 
     public DatabaseManager(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 6);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_VIDEO_GAMES + " (id integer primary key autoincrement, name text, genre text, platform text, yearOfRelease integer, durationHours integer)");
+        db.execSQL("create table " + TABLE_VIDEO_GAMES + " (id integer primary key autoincrement, title text, genre text, platform text, yearOfRelease integer, durationHours integer)");
         db.execSQL("create table " + TABLE_TV_SERIES + " (id integer primary key autoincrement, name text, genre text, yearsRunning text, amountOfEpisodes integer)");
         db.execSQL("create table " + TABLE_MOVIES + " (id integer primary key autoincrement, name text, genre text, yearOfRealease integer, durationMinutes integer)");
     }
