@@ -6,10 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -20,11 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseManager db;
     ListView listView;
-
-//    String[] mainTitle = {"Gran Turismo 7", "Elden Ring"};
-//    String[] subTitle = {"Racing Simulator", "Action RPG"};
-//    Integer[] imgId = {R.drawable.gt7, R.drawable.elden};
-
+    AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<VideoGame> videoGames = get_videoGames();
 
         FloatingActionButton addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener((View.OnClickListener) view -> {
+        addBtn.setOnClickListener(view -> {
             Dialog addGame = new Dialog(this);
             addGame.setContentView(R.layout.add_game);
             addGame.setTitle("Add a new game to your backlog");
@@ -63,24 +68,24 @@ public class MainActivity extends AppCompatActivity {
                 yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
                 durationHoursInt = Integer.parseInt(durationHoursStr);
 
-                videoGame = new VideoGame(nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
+                videoGame = new VideoGame(0, nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
 
                 if (nameStr.matches("") || genreStr.matches("") || yearOfReleaseStr.matches("") || durationHoursStr.matches("")) {
                     Toast toast = Toast.makeText(MainActivity.this, "Please fulfill all fields", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    boolean ret = db.insertVideoGames(videoGame);
+                    boolean ret = db.insertVideoGame(videoGame);
                     if (ret){
-                        Toast toast = Toast.makeText(MainActivity.this, "Added new game", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(MainActivity.this, "Added new game", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Toast toast = Toast.makeText(MainActivity.this, "Error adding game. Please try again", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(MainActivity.this, "Error adding game. Please try again", Toast.LENGTH_SHORT).show();
                     }
 
                     finish();
+                    overridePendingTransition( 0, 0);
                     startActivity(getIntent());
+                    overridePendingTransition( 0, 0);
                 }
                 addGame.dismiss();
             });
@@ -88,42 +93,64 @@ public class MainActivity extends AppCompatActivity {
             btnCancel.setOnClickListener(view1 -> addGame.dismiss());
         });
 
+        TextView emptyPromptTxt = findViewById(R.id.emptyPromptTxt);
         if (videoGames.size() != 0) {
-            ArrayList<String> mainTitle = null, subTitle = null;
-            ArrayList<Integer> imgId = null;
+            emptyPromptTxt.setVisibility(View.INVISIBLE);
+            ArrayList<Integer> ids = new ArrayList<>();
+            ArrayList<String> mainTitle = new ArrayList<>();
+            ArrayList<String> subTitle = new ArrayList<>();
+            ArrayList<Integer> imgId = new ArrayList<>();
             for (int i=0; i<videoGames.size(); i++){
-                mainTitle.add("str");
-                subTitle.add("myl");
+                ids.add(videoGames.get(i).getId());
+                mainTitle.add(videoGames.get(i).getTitle());
+                subTitle.add(videoGames.get(i).getGenre());
                 imgId.add(R.drawable.generic_video_game);
             }
             CustomListAdapter adapter = new CustomListAdapter(this, mainTitle, subTitle, imgId);
-            listView = findViewById(R.id.list);
+            listView = MainActivity.this.findViewById(R.id.list);
             listView.setAdapter(adapter);
+            listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Delete?");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes",
+                        (dialog, which) -> {
+                            int vgId = videoGames.get(i).getId();
+                            boolean ret = db.deleteVideoGame(vgId);
+                            if (ret){
+                                Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "Error deleting game. Please try again", Toast.LENGTH_SHORT).show();
+                            }
+
+                            finish();
+                            overridePendingTransition( 0, 0);
+                            startActivity(getIntent());
+                            overridePendingTransition( 0, 0);
+                        });
+                alertDialog.show();
+                return true;
+            });
+        }
+        else{
+            emptyPromptTxt.setVisibility(View.VISIBLE);
         }
     }
 
     protected ArrayList<VideoGame> get_videoGames() {
-        // on below line we are creating a
-        // database for reading our database.
-
-        // on below line we are creating a new array list.
         ArrayList<VideoGame> videoGames = new ArrayList<>();
         Cursor cursor = db.getAllVideoGames();
 
-        // moving our cursor to first position.
         if (cursor.moveToFirst()) {
             do {
-                // on below line we are adding the data from cursor to our array list.
-                videoGames.add(new VideoGame(cursor.getString(1),
+                videoGames.add(new VideoGame(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
                         Integer.parseInt(cursor.getString(4)),
                         Integer.parseInt(cursor.getString(5))));
             } while (cursor.moveToNext());
-            // moving our cursor to next.
         }
-        // at last closing our cursor
-        // and returning our array list.
         cursor.close();
         return videoGames;
     }

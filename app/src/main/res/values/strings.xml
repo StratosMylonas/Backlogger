@@ -8,7 +8,8 @@
 
     <!--    Main Activity    -->
     <string name="main_activity_add_button">Add Button</string>
-    <string name="main_activity_no_entries">Add a game\nto your backlog</string>
+    <string name="main_activity_no_entries">Your Backlog Is Empty</string>
+    <string name="main_activity_menu_image">Menu</string>
 
     <!--    Add Game    -->
     <string name="add_game_title">Title: </string>

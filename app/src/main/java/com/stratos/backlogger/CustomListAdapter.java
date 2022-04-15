@@ -31,9 +31,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.custom_view, null, true);
 
-        TextView titleText = (TextView) rowView.findViewById(R.id.title);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        TextView subtitleText = (TextView) rowView.findViewById(R.id.subtitle);
+        TextView titleText = rowView.findViewById(R.id.title);
+        ImageView imageView = rowView.findViewById(R.id.icon);
+        TextView subtitleText = rowView.findViewById(R.id.subtitle);
 
         titleText.setText(mainTitle.get(position));
         imageView.setImageResource(imgId.get(position));
