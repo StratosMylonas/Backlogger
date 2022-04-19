@@ -33,7 +33,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertVideoGame(VideoGame videoGame){
+    public boolean insertVideoGame(VideoGame videoGame) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", videoGame.getTitle());
@@ -51,9 +51,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_VIDEO_GAMES, null);
     }
 
-    public boolean deleteVideoGame(int id){
+    public boolean deleteVideoGame(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result =  db.delete(TABLE_VIDEO_GAMES, "id=?", new String[]{Integer.toString(id)});
+        long result = db.delete(TABLE_VIDEO_GAMES, "id=?", new String[]{Integer.toString(id)});
         return result != -1;
     }
 }

@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
             android:id="@+id/add_game_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_game_title"/>
+            android:hint="@string/add_game_title" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -25,7 +24,7 @@
             android:id="@+id/add_game_genre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_game_genre"/>
+            android:hint="@string/add_game_genre" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,7 +36,7 @@
             android:id="@+id/add_game_platform"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_game_platform"/>
+            android:hint="@string/add_game_platform" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,7 +48,7 @@
             android:id="@+id/add_game_release_year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_game_release_year"/>
+            android:hint="@string/add_game_release_year" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +60,7 @@
             android:id="@+id/add_game_duration_hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_game_duration_hours"/>
+            android:hint="@string/add_game_duration_hours" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,21 +71,21 @@
 
         <Button
             android:id="@+id/add_game_btn_ok"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_game_btn_ok"
-            android:layout_weight="0.5"
             android:layout_margin="10dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="0.5"
+            android:text="@string/add_game_btn_ok" />
 
         <Button
             android:id="@+id/add_game_btn_cancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_game_btn_cancel"
-            android:layout_weight="0.5"
             android:layout_margin="10dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_weight="0.5"
+            android:text="@string/add_game_btn_cancel" />
 
 
     </LinearLayout>

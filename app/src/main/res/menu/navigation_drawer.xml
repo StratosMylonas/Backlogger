@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/video_games_tab"
+            android:checked="true"
+            android:icon="@drawable/video_games_icon"
+            android:title="@string/video_games_title" />
+        <item
+            android:id="@+id/tv_shows_tab"
+            android:icon="@drawable/tv_shows_icon"
+            android:title="@string/tv_shows_title" />
+        <item
+            android:id="@+id/movies_tab"
+            android:icon="@drawable/movies_icon"
+            android:title="@string/movies_title" />
+    </group>
+</menu>

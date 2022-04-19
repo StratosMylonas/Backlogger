@@ -3,9 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/activity_backlog_video_games.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/activity_main_drawer.xml" value="0.3625" />
         <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/add_game.xml" value="0.1" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/content_main.xml" value="0.2563405797101449" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/custom_drawer_layout.xml" value="0.3625" />
         <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/custom_view.xml" value="0.2" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/fragment_connect.xml" value="0.2563405797101449" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/fragment_movies.xml" value="0.14583333333333334" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/fragment_tv_shows.xml" value="0.14583333333333334" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/fragment_video_games.xml" value="0.14583333333333334" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/header_navigation_drawer.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/header_navigation_drwaer.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/list_view_item_row.xml" value="0.2563405797101449" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/nav_header.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/nav_header_main.xml" value="0.3625" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/row_nav_drawer.xml" value="0.17426545086119555" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/layout/toolbar.xml" value="0.2563405797101449" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/menu/activity_main_drawer.xml" value="0.35833333333333334" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/menu/drawer_view.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/strat/Android Studio Projects/Backlogger/app/src/main/res/menu/navigation_drawer.xml" value="0.18177083333333333" />
       </map>
     </option>
   </component>
