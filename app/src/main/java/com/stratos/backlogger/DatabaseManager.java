@@ -43,6 +43,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put("durationHours", videoGame.getDurationHours());
 
         long result = db.insert(TABLE_VIDEO_GAMES, null, contentValues);
+        db.close();
+        return result != -1;
+    }
+
+    public boolean updateVideoGame(VideoGame videoGame) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        int _id = videoGame.getId();
+        contentValues.put("title", videoGame.getTitle());
+        contentValues.put("genre", videoGame.getGenre());
+        contentValues.put("platform", videoGame.getPlatform());
+        contentValues.put("yearOfRelease", videoGame.getYearOfRelease());
+        contentValues.put("durationHours", videoGame.getDurationHours());
+
+        long result = db.update(TABLE_VIDEO_GAMES, contentValues, "id = ?", new String[]{String.valueOf(_id)});
+        db.close();
         return result != -1;
     }
 

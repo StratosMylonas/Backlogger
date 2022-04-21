@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1028316656529",
+    "project_id": "backlogger-c8ee6",
+    "storage_bucket": "backlogger-c8ee6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028316656529:android:1e5c6b909ade4c92c2a030",
+        "android_client_info": {
+          "package_name": "com.stratos.backlogger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028316656529-dp90so0td18pi7v51j567ojk4mq64aeq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH94TbCK7GOatroVM0Ndy0M84WwQu8asQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1028316656529-dp90so0td18pi7v51j567ojk4mq64aeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,9 @@ package com.stratos.backlogger;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,13 +86,16 @@ public class VideoGamesFragment extends Fragment {
             Dialog addGame = new Dialog(getActivity());
             addGame.setContentView(R.layout.add_game);
             addGame.setTitle("Add a new game to your backlog");
+            addGame.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             addGame.show();
 
             TextInputEditText name = addGame.findViewById(R.id.add_game_title);
             TextInputEditText genre = addGame.findViewById(R.id.add_game_genre);
             TextInputEditText platform = addGame.findViewById(R.id.add_game_platform);
             TextInputEditText yearOfRelease = addGame.findViewById(R.id.add_game_release_year);
+            yearOfRelease.setInputType(InputType.TYPE_CLASS_NUMBER);
             TextInputEditText durationHours = addGame.findViewById(R.id.add_game_duration_hours);
+            durationHours.setInputType(InputType.TYPE_CLASS_NUMBER);
             Button btnOk = addGame.findViewById(R.id.add_game_btn_ok);
             Button btnCancel = addGame.findViewById(R.id.add_game_btn_cancel);
 
@@ -105,25 +110,29 @@ public class VideoGamesFragment extends Fragment {
                 yearOfReleaseStr = Objects.requireNonNull(yearOfRelease.getText()).toString();
                 durationHoursStr = Objects.requireNonNull(durationHours.getText()).toString();
 
-                yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
-                durationHoursInt = Integer.parseInt(durationHoursStr);
-
-                videoGame = new VideoGame(0, nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
-
-                if (nameStr.matches("") || genreStr.matches("") || yearOfReleaseStr.matches("") || durationHoursStr.matches("")) {
-                    Toast toast = Toast.makeText(getActivity(), "Please fulfill all fields", Toast.LENGTH_SHORT);
+                if (nameStr.matches("") || genreStr.matches("") || platformStr.matches("")) {
+                    Toast toast = Toast.makeText(getActivity(), "Please fulfill all needed fields", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
+                    if (!yearOfReleaseStr.matches(""))
+                        yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
+                    else yearOfReleaseInt = 0;
+
+                    if (!durationHoursStr.matches(""))
+                        durationHoursInt = Integer.parseInt(durationHoursStr);
+                    else durationHoursInt = 0;
+
+                    videoGame = new VideoGame(0, nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
+
                     boolean ret = db.insertVideoGame(videoGame);
                     if (ret) {
                         Toast.makeText(getActivity(), "Added new game", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), "Error adding game. Please try again", Toast.LENGTH_SHORT).show();
                     }
-
+                    addGame.dismiss();
                     requireActivity().recreate();
                 }
-                addGame.dismiss();
             });
 
             btnCancel.setOnClickListener(view1 -> addGame.dismiss());
@@ -135,16 +144,81 @@ public class VideoGamesFragment extends Fragment {
             ArrayList<Integer> ids = new ArrayList<>();
             ArrayList<String> mainTitle = new ArrayList<>();
             ArrayList<String> subTitle = new ArrayList<>();
+            ArrayList<String> platform = new ArrayList<>();
             ArrayList<Integer> imgId = new ArrayList<>();
             for (int i = 0; i < videoGames.size(); i++) {
                 ids.add(videoGames.get(i).getId());
                 mainTitle.add(videoGames.get(i).getTitle());
                 subTitle.add(videoGames.get(i).getGenre());
+                platform.add(videoGames.get(i).getPlatform());
                 imgId.add(R.drawable.generic_video_game);
             }
-            CustomListAdapter adapter = new CustomListAdapter(getActivity(), mainTitle, subTitle, imgId);
+            CustomListAdapter adapter = new CustomListAdapter(getActivity(), mainTitle, subTitle, platform, imgId);
             listView = view.findViewById(R.id.list);
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener((adapterView, view13, i, l) -> {
+                Dialog addGame = new Dialog(getActivity());
+                addGame.setContentView(R.layout.add_game);
+                addGame.setTitle("Add a new game to your backlog");
+                addGame.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                addGame.show();
+
+                TextInputEditText name = addGame.findViewById(R.id.add_game_title);
+                TextInputEditText genre = addGame.findViewById(R.id.add_game_genre);
+                TextInputEditText platform1 = addGame.findViewById(R.id.add_game_platform);
+                TextInputEditText yearOfRelease = addGame.findViewById(R.id.add_game_release_year);
+                yearOfRelease.setInputType(InputType.TYPE_CLASS_NUMBER);
+                TextInputEditText durationHours = addGame.findViewById(R.id.add_game_duration_hours);
+                durationHours.setInputType(InputType.TYPE_CLASS_NUMBER);
+                Button btnOk = addGame.findViewById(R.id.add_game_btn_ok);
+                Button btnCancel = addGame.findViewById(R.id.add_game_btn_cancel);
+
+                int id = videoGames.get(i).getId();
+                name.setText(videoGames.get(i).getTitle());
+                genre.setText(videoGames.get(i).getGenre());
+                platform1.setText(videoGames.get(i).getPlatform());
+                if (videoGames.get(i).getYearOfRelease() != 0)
+                    yearOfRelease.setText(String.valueOf(videoGames.get(i).getYearOfRelease()));
+                if (videoGames.get(i).getDurationHours() != 0)
+                    durationHours.setText(String.valueOf(videoGames.get(i).getDurationHours()));
+
+                btnOk.setOnClickListener(view14 -> {
+                    VideoGame videoGame;
+                    String nameStr, genreStr, platformStr, yearOfReleaseStr, durationHoursStr;
+                    int yearOfReleaseInt, durationHoursInt;
+
+                    nameStr = Objects.requireNonNull(name.getText()).toString();
+                    genreStr = Objects.requireNonNull(genre.getText()).toString();
+                    platformStr = Objects.requireNonNull(platform1.getText()).toString();
+                    yearOfReleaseStr = Objects.requireNonNull(yearOfRelease.getText()).toString();
+                    durationHoursStr = Objects.requireNonNull(durationHours.getText()).toString();
+
+                    if (nameStr.matches("") || genreStr.matches("") || platformStr.matches("")) {
+                        Toast toast = Toast.makeText(getActivity(), "Please fulfill all needed fields", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        if (!yearOfReleaseStr.matches(""))
+                            yearOfReleaseInt = Integer.parseInt(yearOfReleaseStr);
+                        else yearOfReleaseInt = 0;
+
+                        if (!durationHoursStr.matches(""))
+                            durationHoursInt = Integer.parseInt(durationHoursStr);
+                        else durationHoursInt = 0;
+
+                        videoGame = new VideoGame(id, nameStr, genreStr, platformStr, yearOfReleaseInt, durationHoursInt);
+
+                        boolean ret = db.updateVideoGame(videoGame);
+                        if (ret) {
+                            Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Error updating game. Please try again", Toast.LENGTH_SHORT).show();
+                        }
+                        addGame.dismiss();
+                        requireActivity().recreate();
+                    }
+                });
+                btnCancel.setOnClickListener(view1 -> addGame.dismiss());
+            });
             listView.setOnItemLongClickListener((adapterView, v, i, l) -> {
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                 alertDialog.setTitle("Delete?");

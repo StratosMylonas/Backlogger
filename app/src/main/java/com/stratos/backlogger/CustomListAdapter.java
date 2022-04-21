@@ -15,15 +15,17 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final ArrayList<String> mainTitle;
-    private final ArrayList<String> subtitle;
+    private final ArrayList<String> genre;
+    private final ArrayList<String> platform;
     private final ArrayList<Integer> imgId;
 
-    public CustomListAdapter(Activity context, ArrayList<String> mainTitle, ArrayList<String> subtitle, ArrayList<Integer> imgId) {
+    public CustomListAdapter(Activity context, ArrayList<String> mainTitle, ArrayList<String> genre, ArrayList<String> platform, ArrayList<Integer> imgId) {
         super(context, R.layout.custom_view, mainTitle);
 
         this.context = context;
         this.mainTitle = mainTitle;
-        this.subtitle = subtitle;
+        this.genre = genre;
+        this.platform = platform;
         this.imgId = imgId;
     }
 
@@ -33,11 +35,13 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         TextView titleText = rowView.findViewById(R.id.title);
         ImageView imageView = rowView.findViewById(R.id.icon);
-        TextView subtitleText = rowView.findViewById(R.id.subtitle);
+        TextView subtitleText = rowView.findViewById(R.id.genre);
+        TextView platformText = rowView.findViewById(R.id.platform);
 
         titleText.setText(mainTitle.get(position));
         imageView.setImageResource(imgId.get(position));
-        subtitleText.setText(subtitle.get(position));
+        subtitleText.setText(genre.get(position));
+        platformText.setText(platform.get(position));
 
         return rowView;
     }
